@@ -15,24 +15,19 @@ jobs:
         with:
           fetch-depth: 0 # Full history required for selective testing
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'pnpm'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
 
       - name: UVT Environment Diagnostic
         run: |
           echo "=== UVT Environment ==="
-          echo "Package Manager : pnpm"
+          echo "Package Manager : npm"
           echo "Workspace       : Yes"
           echo "Framework       : Static HTML"
           echo "CLI Source      : Workspace"
@@ -75,7 +70,7 @@ jobs:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
       - name: Ensure UVT CLI is installed
         run: |
-          if ! pnpm --filter @uvt/cli exec uvt --version &>/dev/null; then
+          if ! npx uvt --version &>/dev/null; then
             echo "UVT CLI was not found."
             echo "Detected package manager: pnpm"
             echo "Workspace: Yes"
@@ -89,7 +84,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Playwright Browsers
         if: steps.playwright-cache.outputs.cache-hit != 'true'
@@ -99,7 +94,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.local/share/percy
-          key: ${{ runner.os }}-percy-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-percy-${{ hashFiles('**/package-lock.json') }}
 
       - name: Build frontend application
         run: npm run build --if-present
@@ -114,6 +109,6 @@ jobs:
           done
 
       - name: Run visual regression tests
-        run: npx percy exec -- pnpm --filter @uvt/cli exec uvt test --changed --port 3000
+        run: npx percy exec -- npx uvt test --changed --port 3000
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
