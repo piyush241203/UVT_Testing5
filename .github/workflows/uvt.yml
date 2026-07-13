@@ -22,15 +22,15 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: UVT Environment Diagnostic
         run: |
           echo "=== UVT Environment ==="
           echo "Package Manager : npm"
-          echo "Workspace       : Yes"
+          echo "Workspace       : No"
           echo "Framework       : Static HTML"
-          echo "CLI Source      : Workspace"
+          echo "CLI Source      : Published Package"
           echo "Node            : \$(node -v)"
           echo "Working Dir     : \$(pwd)"
           
@@ -71,12 +71,15 @@ jobs:
       - name: Ensure UVT CLI is installed
         run: |
           if ! npx uvt --version &>/dev/null; then
-            echo "UVT CLI was not found."
-            echo "Detected package manager: pnpm"
-            echo "Workspace: Yes"
-            echo "Attempted installation: Workspace package filter"
-            echo "Please verify package installation."
-            exit 1
+            echo "UVT CLI not found. Installing..."
+            npm install -D @uvt/cli || {
+              echo "UVT CLI was not found."
+              echo "Detected package manager: npm"
+              echo "Workspace: No"
+              echo "Attempted installation: npm install -D @uvt/cli"
+              echo "Please verify package installation."
+              exit 1
+            }
           fi
 
       - name: Cache Playwright Browsers
