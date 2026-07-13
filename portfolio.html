@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UVT Static HTML Demo - Portfolio</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo">⚡ UVT HTML</div>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="./">Home</a></li>
+        <li class="nav-item"><a href="./about.html">About</a></li>
+        <li class="nav-item"><a href="./services.html">Services</a></li>
+        <li class="nav-item active"><a href="./portfolio.html">Portfolio</a></li>
+        <li class="nav-item"><a href="./blog.html">Blog</a></li>
+        <li class="nav-item"><a href="./contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Our Portfolio</h1>
+    <p>Explore some of the frontend layout structures certified and qualified by our engines.</p>
+  </section>
+
+  <main class="container">
+    <div class="gallery">
+      <!-- Item 1 -->
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=500&auto=format&fit=crop&q=60" alt="Code Editor Design">
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 12px; background: rgba(15, 23, 42, 0.85); border-top: 1px solid var(--border);">
+          <div style="font-weight: 600; font-size: 0.875rem;">Web Editor App</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">TypeScript Router Integration</div>
+        </div>
+      </div>
+      
+      <!-- Item 2 -->
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=500&auto=format&fit=crop&q=60" alt="Dashboard Design">
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 12px; background: rgba(15, 23, 42, 0.85); border-top: 1px solid var(--border);">
+          <div style="font-weight: 600; font-size: 0.875rem;">Interactive Dashboard</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Real-time Websocket Graphs</div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&auto=format&fit=crop&q=60" alt="E-Commerce Design">
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 12px; background: rgba(15, 23, 42, 0.85); border-top: 1px solid var(--border);">
+          <div style="font-weight: 600; font-size: 0.875rem;">E-Commerce Platform</div>
+          <div style="font-size: 0.75rem; color: var(--text-muted);">Tailwind CSS & Next.js Routing</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Universal Visual Testing Platform. Multi-page HTML Certification fixtures.</p>
+  </footer>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

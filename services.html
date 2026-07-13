@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UVT Static HTML Demo - Services</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo">⚡ UVT HTML</div>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="./">Home</a></li>
+        <li class="nav-item"><a href="./about.html">About</a></li>
+        <li class="nav-item active"><a href="./services.html">Services</a></li>
+        <li class="nav-item"><a href="./portfolio.html">Portfolio</a></li>
+        <li class="nav-item"><a href="./blog.html">Blog</a></li>
+        <li class="nav-item"><a href="./contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Our Services</h1>
+    <p>Professional static integration audits, DOM tree analysis, and visual stabilization consulting.</p>
+  </section>
+
+  <main class="container">
+    <div class="grid-3">
+      <div class="card">
+        <h3>1. Visual Discovery</h3>
+        <p>Advanced parsing models trace page structures automatically with zero manual annotations required.</p>
+      </div>
+      <div class="card">
+        <h3>2. Flakiness Defense</h3>
+        <p>Our dynamic stabilization hooks intercept and mask random values at the render layer.</p>
+      </div>
+      <div class="card">
+        <h3>3. Regression Intelligence</h3>
+        <p>Continuous integration scans git deltas recursively, flagging visual anomalies immediately.</p>
+      </div>
+    </div>
+
+    <!-- Progress bar & SVG animation widget -->
+    <div class="card" style="margin-top: 2rem;">
+      <h3>System Performance</h3>
+      <p>Visual representation of dynamic background loading metrics.</p>
+      
+      <!-- Progress Bar (animated via simple CSS transition or left stable) -->
+      <div class="widget">
+        <div class="widget-title">Engine Health Status</div>
+        <div style="width: 100%; height: 12px; background-color: var(--bg-primary); border-radius: 6px; overflow: hidden; border: 1px solid var(--border); margin-top: 8px;">
+          <div style="width: 75%; height: 100%; background-color: #10b981; border-radius: 6px;"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+          <span>75% Stabilized</span>
+          <span>Latency: Low</span>
+        </div>
+      </div>
+
+      <!-- Animated SVG Loading -->
+      <div class="widget" style="display: flex; align-items: center; gap: 12px; margin-top: 1rem;">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="18" stroke="var(--border)" stroke-width="4"/>
+          <path d="M20 2 A18 18 0 0 1 38 20" stroke="var(--accent)" stroke-width="4" stroke-linecap="round">
+            <animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="1s" repeatCount="indefinite"/>
+          </path>
+        </svg>
+        <span style="font-size: 0.875rem; color: var(--text-muted);">Real-time monitoring active</span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Universal Visual Testing Platform. Multi-page HTML Certification fixtures.</p>
+  </footer>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

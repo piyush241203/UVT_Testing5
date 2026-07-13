@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UVT Static HTML Demo - About</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo">⚡ UVT HTML</div>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="./">Home</a></li>
+        <li class="nav-item active"><a href="./about.html">About</a></li>
+        <li class="nav-item"><a href="./services.html">Services</a></li>
+        <li class="nav-item"><a href="./portfolio.html">Portfolio</a></li>
+        <li class="nav-item"><a href="./blog.html">Blog</a></li>
+        <li class="nav-item"><a href="./contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>About Our Technology</h1>
+    <p>We build framework-independent Visual Regression adapters that operate at the DOM, network, and AST layers.</p>
+  </section>
+
+  <main class="container">
+    <div class="grid-3">
+      <!-- Random Testimonial Card with Avatar (Tests DSE Avatars Blurring) -->
+      <div class="card" style="grid-column: span 2;">
+        <h3>Customer Success</h3>
+        <p>Dynamic user profiles and random client reviews generated on page mount.</p>
+        <div class="widget">
+          <p id="testimonial-text" style="font-style: italic; color: var(--text-main); font-size: 1.1rem;">"Loading feedback..."</p>
+          <div class="avatar-group">
+            <img id="testimonial-avatar" class="avatar" src="" alt="User avatar">
+            <div id="testimonial-name" style="font-weight: 600; color: var(--accent);">-- --</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Countdown timer card -->
+      <div class="card">
+        <h3>Release Launch</h3>
+        <p>Live countdown clock representing release cycles.</p>
+        <div class="widget">
+          <div class="widget-title">Time to Release</div>
+          <div id="countdown-timer" style="font-size: 1.5rem; font-weight: 700; color: var(--accent);">--:--:--</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skeleton loading test wrapper -->
+    <div class="card" style="margin-top: 2rem;">
+      <h3>Skeleton Loader Test</h3>
+      <p>Verifying that dynamic layouts do not trigger false regressions during initial mounting states.</p>
+      
+      <!-- Skeleton loader element -->
+      <div class="skeleton-wrapper" style="margin-top: 1rem;">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text" style="width: 80%;"></div>
+      </div>
+
+      <!-- Real loaded content (starts hidden, main.js displays it after 1.2s) -->
+      <div class="skeleton-content" style="display: none; margin-top: 1rem; color: #10b981; font-weight: 600;">
+        ✓ Real application views loaded and initialized successfully!
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Universal Visual Testing Platform. Multi-page HTML Certification fixtures.</p>
+  </footer>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

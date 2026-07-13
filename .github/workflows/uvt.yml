@@ -1,0 +1,119 @@
+name: Visual Regression Testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  visual-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full history required for selective testing
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: UVT Environment Diagnostic
+        run: |
+          echo "=== UVT Environment ==="
+          echo "Package Manager : pnpm"
+          echo "Workspace       : Yes"
+          echo "Framework       : Static HTML"
+          echo "CLI Source      : Workspace"
+          echo "Node            : \$(node -v)"
+          echo "Working Dir     : \$(pwd)"
+          
+          if npx playwright --version &>/dev/null; then
+            echo "Playwright      : Installed"
+          else
+            echo "Playwright      : Not Installed"
+          fi
+          
+          echo "=== Percy Diagnostics ==="
+          if [ -n "\$PERCY_TOKEN" ]; then
+            echo "PERCY_TOKEN: Present"
+            echo "Length: \${#PERCY_TOKEN}"
+            MASKED_TOKEN="\${PERCY_TOKEN:0:4}****\${PERCY_TOKEN: -4}"
+            echo "Masked: \$MASKED_TOKEN"
+          else
+            echo "PERCY_TOKEN: Not Present"
+          fi
+          
+          if npx percy --version &>/dev/null; then
+            echo "Percy CLI: \$(npx percy --version)"
+          else
+            echo "Percy CLI: Not Installed"
+          fi
+          
+          if npm ls @percy/playwright &>/dev/null; then
+            echo "@percy/playwright: \$(npm ls @percy/playwright | grep @percy/playwright)"
+          else
+            echo "@percy/playwright: Not Installed or not found in npm ls"
+          fi
+          
+          echo "--- Percy Environment Variables ---"
+          env | grep PERCY || echo "No other PERCY_* vars found"
+          
+          echo "======================="
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+      - name: Ensure UVT CLI is installed
+        run: |
+          if ! pnpm --filter @uvt/cli exec uvt --version &>/dev/null; then
+            echo "UVT CLI was not found."
+            echo "Detected package manager: pnpm"
+            echo "Workspace: Yes"
+            echo "Attempted installation: Workspace package filter"
+            echo "Please verify package installation."
+            exit 1
+          fi
+
+      - name: Cache Playwright Browsers
+        id: playwright-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install Playwright Browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium --with-deps
+
+      - name: Cache Percy Browser
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/percy
+          key: ${{ runner.os }}-percy-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Build frontend application
+        run: npm run build --if-present
+
+      - name: Start dev server in background
+        run: npx vite --port 3000 --strictPort &
+
+      - name: Wait for local server
+        run: |
+          for i in {1..30}; do
+            curl -s http://localhost:3000 && break || sleep 1
+          done
+
+      - name: Run visual regression tests
+        run: npx percy exec -- pnpm --filter @uvt/cli exec uvt test --changed --port 3000
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}

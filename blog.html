@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UVT Static HTML Demo - Blog</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <div class="logo">⚡ UVT HTML</div>
+      <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="./">Home</a></li>
+        <li class="nav-item"><a href="./about.html">About</a></li>
+        <li class="nav-item"><a href="./services.html">Services</a></li>
+        <li class="nav-item"><a href="./portfolio.html">Portfolio</a></li>
+        <li class="nav-item active"><a href="./blog.html">Blog</a></li>
+        <li class="nav-item"><a href="./contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>Our Tech Blog</h1>
+    <p>Read about the latest patterns in visual regression architectures and rendering engines stabilization.</p>
+  </section>
+
+  <main class="container">
+    <div class="grid-3">
+      <div class="card">
+        <div style="font-size: 0.8rem; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase;">Architecture</div>
+        <h3>The Rise of Zero-Config</h3>
+        <p>Why modern development teams are shifting away from manual end-to-end visual tests configuration files.</p>
+      </div>
+
+      <div class="card">
+        <div style="font-size: 0.8rem; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase;">Engineering</div>
+        <h3>Stabilization Engine Mechanics</h3>
+        <p>A deep look at how DOM mutations are intercepted in-flight to prevent dynamic clocks and random feeds from breaking builds.</p>
+      </div>
+
+      <div class="card">
+        <div style="font-size: 0.8rem; color: var(--accent); margin-bottom: 0.5rem; text-transform: uppercase;">Performance</div>
+        <h3>Selective Testing Analytics</h3>
+        <p>How dependency graph tracing reduces Percy build times by up to 90% by ignoring unaffected pages.</p>
+      </div>
+    </div>
+
+    <!-- API Response Simulation Widget (Tests DSE dynamic network responses) -->
+    <div class="card" style="margin-top: 2rem;">
+      <h3>Live API Endpoint Statistics (Dynamic)</h3>
+      <p>This widget fetches statistics from a mock service on load, representing real-time traffic values that vary on every execution.</p>
+      <div class="widget">
+        <div class="widget-title">GET /api/stats response</div>
+        <pre id="api-json-data" style="font-family: monospace; font-size: 0.85rem; color: var(--text-muted); background-color: var(--bg-primary); padding: 12px; border-radius: 4px; border: 1px solid var(--border); overflow-x: auto;">Loading API data...</pre>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Universal Visual Testing Platform. Multi-page HTML Certification fixtures.</p>
+  </footer>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
