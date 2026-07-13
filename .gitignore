@@ -4,3 +4,8 @@
 .nuxt/
 .uvt/
 tests/generated/
+
+/.next/
+/.nuxt/
+/.uvt/
+/tests/generated/
