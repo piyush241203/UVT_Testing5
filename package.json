@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@percy/cli": "^1.32.3",
-    "@percy/playwright": "^1.1.0",
+    "@percy/playwright": "1.1.0",
     "@playwright/test": "^1.61.1",
     "@uvt/cli": "file:./uvt-packages/cli",
     "playwright": "^1.61.1",
