@@ -103,7 +103,11 @@ class PercyProvider {
             return;
         }
         shared_1.logger.info(`Sending DOM snapshot "${name}" to Percy...`);
-        await (0, playwright_1.default)(page, name);
+        const percyPromise = (0, playwright_1.default)(page, name);
+        const timeoutPromise = new Promise((resolve, reject) => {
+            setTimeout(() => reject(new Error(`Percy snapshot timed out after 15 seconds for ${name}`)), 15000);
+        });
+        await Promise.race([percyPromise, timeoutPromise]);
     }
     async finalize() {
         if (this.percyRunning) {
