@@ -1287,7 +1287,7 @@ certifyCmd.option('--repository <path>', 'Run certification on a specific reposi
         shared_1.logger.error(`Repository Certification failed: ${e.message}`);
     }
 });
-certifyCmd.command('ccrcs')
+certifyCmd.command('matrix')
     .description('Run CCRCS on versioned repository matrix catalog')
     .action(async () => {
     try {
@@ -1302,7 +1302,7 @@ certifyCmd.command('ccrcs')
         shared_1.logger.error(`CCRCS matrix run failed: ${e.message}`);
     }
 });
-certifyCmd.command('matrix')
+certifyCmd.command('demo-matrix')
     .description('Run URAE Framework Certification Matrix across all demo repositories (RC-04)')
     .option('--path <path>', 'Base path containing demo repositories', process.cwd())
     .action(async (options) => {
