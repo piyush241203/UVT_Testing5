@@ -5,6 +5,7 @@
 .uvt/
 tests/generated/
 
+node_modules/
 /.next/
 /.nuxt/
 /.uvt/
