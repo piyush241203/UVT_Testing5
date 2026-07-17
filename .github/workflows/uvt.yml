@@ -99,10 +99,10 @@ jobs:
           key: ${{ runner.os }}-percy-${{ hashFiles('**/package-lock.json') }}
 
       - name: Build frontend application
-        run: npm run build --if-present
+        run: echo "No build required for static HTML"
 
       - name: Start dev server in background
-        run: npx vite --host 127.0.0.1 --port 3000 --strictPort &
+        run: npx --yes vite --host 127.0.0.1 --port 3000 --strictPort &
 
       - name: Wait for local server
         run: |
