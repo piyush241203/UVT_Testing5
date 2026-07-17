@@ -112,12 +112,18 @@ class PercyProvider {
     async finalize() {
         if (this.percyRunning) {
             shared_1.logger.success('All snapshots sent to Percy successfully.');
-            if (this.autoStarted) {
-                shared_1.logger.info('Stopping background Percy CLI server...');
+            shared_1.logger.info('Finalizing Percy build and stopping local agent...');
+            const stopped = await this.stopPercyAgent();
+            if (stopped) {
+                shared_1.logger.success('Percy build finalized and local agent stopped successfully.');
+            }
+            else {
+                shared_1.logger.warn('Failed to stop Percy agent via API. Falling back to command line...');
                 try {
                     const isWin = process.platform === 'win32';
                     const cmd = isWin ? 'npx.cmd' : 'npx';
                     require('child_process').execSync(`${cmd} percy exec:stop`, { stdio: 'ignore' });
+                    shared_1.logger.success('Percy build finalized via command line.');
                 }
                 catch (e) {
                     shared_1.logger.error('Failed to stop background Percy server.');
@@ -125,14 +131,36 @@ class PercyProvider {
             }
         }
     }
+    stopPercyAgent() {
+        return new Promise((resolve) => {
+            const req = http.request({
+                host: '127.0.0.1',
+                port: 5338,
+                path: '/percy/stop',
+                method: 'POST',
+                timeout: 15000
+            }, (res) => {
+                resolve(res.statusCode === 200);
+            });
+            req.on('error', () => {
+                resolve(false);
+            });
+            req.on('timeout', () => {
+                req.destroy();
+                resolve(false);
+            });
+            req.end();
+        });
+    }
     startPercyAgent() {
         return new Promise((resolve) => {
             const isWin = process.platform === 'win32';
             const cmd = isWin ? 'npx.cmd' : 'npx';
             const child = require('child_process').spawn(cmd, ['--yes', 'percy', 'exec:start'], {
-                detached: !isWin, // Detached mode on Windows for npx can cause it to hang or fail
+                detached: !isWin,
                 stdio: 'ignore',
-                env: process.env
+                env: process.env,
+                shell: isWin
             });
             child.unref();
             let attempts = 0;
