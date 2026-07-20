@@ -21,7 +21,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: UVT Environment Diagnostic
         run: |
@@ -67,7 +67,19 @@ jobs:
           echo "======================="
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-
+      - name: Ensure UVT CLI is installed
+        run: |
+          if ! npx uvt --version &>/dev/null; then
+            echo "UVT CLI not found. Installing..."
+            npm install -D @uvt/cli || {
+              echo "UVT CLI was not found."
+              echo "Detected package manager: npm"
+              echo "Workspace: No"
+              echo "Attempted installation: npm install -D @uvt/cli"
+              echo "Please verify package installation."
+              exit 1
+            }
+          fi
 
       - name: Cache Playwright Browsers
         id: playwright-cache
@@ -87,21 +99,22 @@ jobs:
           key: ${{ runner.os }}-percy-${{ hashFiles('**/package-lock.json') }}
 
       - name: Build frontend application
-        run: echo "No build required for static HTML"
+        run: npm run build --if-present
 
       - name: Start dev server in background
-        run: npx --yes vite --host 127.0.0.1 --port 3000 --strictPort &
+        run: npx vite --port 3000 --strictPort &
 
       - name: Wait for local server
         run: |
           for i in {1..30}; do
-            curl -s http://127.0.0.1:3000 && break || sleep 1
+            curl -s http://localhost:3000 && break || sleep 1
           done
 
       - name: Run visual regression tests
-        run: npx uvt test --changed --host 127.0.0.1 --port 3000
+        run: npx percy exec -- npx uvt test --changed --port 3000
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+
           
       - name: Teardown background processes
         if: always()
