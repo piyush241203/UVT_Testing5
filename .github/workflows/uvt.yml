@@ -102,7 +102,7 @@ jobs:
         run: npm run build --if-present
 
       - name: Start dev server in background
-        run: npx vite --port 3000 --strictPort &
+        run: npx serve . -p 3000 &
 
       - name: Wait for local server
         run: |
@@ -111,10 +111,21 @@ jobs:
           done
 
       - name: Run visual regression tests
-        run: npx uvt test --changed --port 3000
+        run: npx percy exec -- npx uvt test --changed --port 3000
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-          
+
+      - name: Print Percy logs
+        if: always()
+        run: |
+          if [ -f .uvt/percy.log ]; then
+            echo "=== Percy CLI Logs ==="
+            cat .uvt/percy.log
+          else
+            echo "No Percy CLI logs found."
+          fi
+
       - name: Teardown background processes
         if: always()
-        run: pkill -f "vite" || true
+        run: pkill -f "serve" || pkill -f "vite" || true
+
